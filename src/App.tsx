@@ -74,6 +74,7 @@ function App() {
           Copy to Clipboard
         </button>
       </CopyToClipboard>
+      {copyStatus && <p>Text copied to clipboard!</p>}
       <br></br>
       <ToastContainer />
       <CustomWebcam />
