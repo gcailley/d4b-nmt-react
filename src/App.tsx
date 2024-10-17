@@ -10,17 +10,17 @@ import viteLogo from "/vite.svg";
 
 function App() {
   const [count, setCount] = useState(0);
-  const { VITE_APP_VAPID_KEY } = import.meta.env;
-
+  const [myToken, setToken] = useState("");
+  const [myConfig] = useState(import.meta.env.VITE_APP_APP_ID);
   async function requestPermission() {
     //requesting permission using Notification API
     const permission = await Notification.requestPermission();
 
     if (permission === "granted") {
       const token = await getToken(messaging, {
-        vapidKey: VITE_APP_VAPID_KEY,
+        vapidKey: import.meta.env.VITE_APP_VAPID_KEY,
       });
-
+      setToken(token);
       //We can send token to server
       console.log("Token generated : ", token);
     } else if (permission === "denied") {
@@ -34,7 +34,7 @@ function App() {
   }, []);
 
   onMessage(messaging, (payload) => {
-    console.log("incoming msg");
+    console.log("incoming msg", payload);
     toast(<Message notification={payload.notification} />);
   });
 
@@ -60,6 +60,9 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      token : {myToken}
+      <br></br>
+      myConfig:{myConfig}
       <ToastContainer />
     </>
   );
