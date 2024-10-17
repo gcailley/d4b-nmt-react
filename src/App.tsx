@@ -1,5 +1,6 @@
 import { getToken, onMessage } from "firebase/messaging";
 import { useEffect, useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -34,6 +35,13 @@ function App() {
     toast(<Message notification={payload.notification} />);
   });
 
+  const [textToCopy, setTextToCopy] = useState(""); // The text you want to copy
+  const [copyStatus, setCopyStatus] = useState(false); // To indicate if the text was copied
+  const onCopyText = () => {
+    setCopyStatus(true);
+    setTimeout(() => setCopyStatus(false), 2000); // Reset status after 2 seconds
+  };
+
   // PARTIE CAMERA
 
   useEffect(() => {
@@ -61,7 +69,11 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      token : {myToken}
+      <CopyToClipboard text={textToCopy} onCopy={onCopyText}>
+        <button onClick={() => setTextToCopy(myToken)}>
+          Copy to Clipboard
+        </button>
+      </CopyToClipboard>
       <br></br>
       <ToastContainer />
       <CustomWebcam />
