@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "expo-camera": "^15.0.16",
     "firebase": "^10.14.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-toastify": "^10.0.6"
+    "react-toastify": "^10.0.6",
+    "react-webcam": "^7.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",

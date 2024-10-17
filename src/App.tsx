@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import reactLogo from "./assets/react.svg";
+import CustomWebcam from "./components/CustomWebcam";
 import Message from "./components/Message";
 import { messaging } from "./firebase/firebaseConfig";
 import viteLogo from "/vite.svg";
@@ -11,8 +12,7 @@ import viteLogo from "/vite.svg";
 function App() {
   const [count, setCount] = useState(0);
   const [myToken, setToken] = useState("");
-  const [myConfig] = useState(import.meta.env.VITE_APP_APP_ID);
-  async function requestPermission() {
+  async function requestPermissionNotification() {
     //requesting permission using Notification API
     const permission = await Notification.requestPermission();
 
@@ -29,15 +29,16 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    requestPermission();
-  }, []);
-
   onMessage(messaging, (payload) => {
     console.log("incoming msg", payload);
     toast(<Message notification={payload.notification} />);
   });
 
+  // PARTIE CAMERA
+
+  useEffect(() => {
+    requestPermissionNotification();
+  }, []);
   return (
     <>
       <div>
@@ -62,8 +63,8 @@ function App() {
       </p>
       token : {myToken}
       <br></br>
-      myConfig:{myConfig}
       <ToastContainer />
+      <CustomWebcam />
     </>
   );
 }
